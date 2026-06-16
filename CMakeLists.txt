@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 4.4)
 
 project(RenderingEngine)
 
-add_executable(main Main.cpp)
+add_executable(main Main.cpp glad.c)
 
 target_include_directories(main PRIVATE
     Libraries/include
