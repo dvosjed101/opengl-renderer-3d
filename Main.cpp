@@ -1,6 +1,7 @@
 #include "init.h"
 #include "VAO.h"
 #include "VBO.h"
+#include "EBO.h"
 #include "shader.h"
 
 #define WIDTH  800
@@ -10,7 +11,13 @@ std::vector<GLfloat> vertices = {
 //   POSITIONS
 	-0.5f, -0.5f, 0.0f,
 	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	-0.5f,  0.5f, 0.0f,
+	 0.5f,  0.5f, 0.0f,
+};
+
+std::vector<GLuint> indices = {
+	0, 1, 2,
+	1, 2, 3
 };
 
 int main() {
@@ -20,18 +27,26 @@ int main() {
 		return 1;
 	}
 
+
+
 	Shader shaderProgram("source/default.vert", "source/default.frag");
 
+
+
 	VAO vao;
+
+	vao.Bind();
+
 	VBO vbo(vertices);
+	EBO ebo(indices);
 
 	vbo.Bind();
-	vao.Bind();
 
 	vao.LinkAttrib(0, 3, 3 * sizeof(GLfloat), 0);
 
 	vao.Unbind();
 	vbo.Unbind();
+	ebo.Unbind();
 
 
 	while (!glfwWindowShouldClose(window)) {
@@ -42,7 +57,7 @@ int main() {
 
 		vao.Bind();
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -50,6 +65,7 @@ int main() {
 
 	vao.Delete();
 	vbo.Delete();
+	ebo.Delete();
 	shaderProgram.Delete();
 	glfwDestroyWindow(window);
 	glfwTerminate();
