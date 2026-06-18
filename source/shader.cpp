@@ -18,7 +18,6 @@ std::string get_file_contents(const char* filename)
 	throw(errno);
 }
 
-
 Shader::Shader(const char* vertexSource, const char* fragmentSource) {
     std::string vertexCode = get_file_contents(vertexSource).c_str();
     std::string fragmentCode = get_file_contents(fragmentSource).c_str();
@@ -30,9 +29,13 @@ Shader::Shader(const char* vertexSource, const char* fragmentSource) {
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 
+	CheckCompile(vertexShader, "Vertex");
+
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
+
+	CheckCompile(fragmentShader, "Fragment");
 
 	ID = glCreateProgram();
 	glAttachShader(ID, vertexShader);
@@ -41,6 +44,18 @@ Shader::Shader(const char* vertexSource, const char* fragmentSource) {
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+}
+
+void Shader::CheckCompile(GLuint shader, const char* type) {
+    GLint success;
+    char info[1024];
+
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
+    if(!success) {
+        glGetShaderInfoLog(shader, 1024, NULL, info);
+        std::cout << type << " shader error: " << info << std::endl;
+    }
 }
 
 void Shader::Activate() {

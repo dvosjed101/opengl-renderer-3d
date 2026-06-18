@@ -15,6 +15,7 @@ public:
     GLuint ID;
 
     Shader(const char* vertexSource, const char* fragmentSource);
+    void CheckCompile(GLuint shader, const char* type);
     void Activate();
     void Delete();
 };
