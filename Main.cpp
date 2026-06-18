@@ -3,6 +3,7 @@
 #include "VBO.h"
 #include "EBO.h"
 #include "shader.h"
+#include "camera.h"
 
 #define WIDTH  800
 #define HEIGHT 800
@@ -50,18 +51,33 @@ int main() {
 	ebo.Unbind();
 
 
+	Camera cam(window, WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, -2.0f));
+
+	glfwSwapInterval(1);
+
+
+	float deltaTime = 0.0f;
+	float lastFrame = glfwGetTime();
+
 	while (!glfwWindowShouldClose(window)) {
+		float now = glfwGetTime();
+		deltaTime = now - lastFrame;
+		lastFrame = now;
+
+
 		glClearColor(0.498f, 0.722f, 0.902f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.Activate();
-
 		vao.Bind();
+
+		cam.UpdateMatrix(60, 0.1f, 100.0f, shaderProgram, "camMat");
 
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		cam.handleInput(window, deltaTime);
 	}
 
 	vao.Delete();
