@@ -8,11 +8,11 @@
 #define HEIGHT 800
 
 std::vector<GLfloat> vertices = {
-//   POSITIONS
-	-0.5f, -0.5f, 0.0f,
-	 0.5f, -0.5f, 0.0f,
-	-0.5f,  0.5f, 0.0f,
-	 0.5f,  0.5f, 0.0f,
+//       POSITIONS 			   COLORS
+	-0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,
+	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,
+	-0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f,
+	 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,
 };
 
 std::vector<GLuint> indices = {
@@ -42,7 +42,8 @@ int main() {
 
 	vbo.Bind();
 
-	vao.LinkAttrib(0, 3, 3 * sizeof(GLfloat), 0);
+	vao.LinkAttrib(0, 3, 6 * sizeof(GLfloat), 0);
+	vao.LinkAttrib(1, 3, 6 * sizeof(GLfloat), 3);
 
 	vao.Unbind();
 	vbo.Unbind();
