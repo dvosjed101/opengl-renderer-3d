@@ -247,7 +247,11 @@ int main() {
 	vao.Delete();
 	vbo.Delete();
 	ebo.Delete();
+	vaoLight.Delete();
+	vboLight.Delete();
+	eboLight.Delete();
 	shaderProgram.Delete();
+	shaderProgramLight.Delete();
 	tex.Delete();
 	glfwDestroyWindow(window);
 	glfwTerminate();
