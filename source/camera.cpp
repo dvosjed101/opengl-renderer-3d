@@ -5,7 +5,7 @@ Camera::Camera(GLFWwindow* window, int width, int height, glm::vec3 pos) {
     Camera::width = width;
     Camera::height = height;
     position = pos;
-    orientation = glm::vec3(0.0f, 0.0f, 1.0f);
+    orientation = glm::vec3(0.0f, 0.0f, -1.0f);
     
     // Hide the cursor and set it in the middle of the window
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
