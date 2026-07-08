@@ -162,7 +162,7 @@ int main() {
 
 	float lightCubeScale = 0.25;
 	glm::vec3 lightPos = glm::vec3(2.0f, 1.0f, 1.0f);
-	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
+	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	VAO vaoLight;
 
@@ -220,6 +220,9 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shaderProgram.Activate();
+
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), cam.position.x, cam.position.y, cam.position.z);
+
 		vao.Bind();
 		tex.Bind();
 		
